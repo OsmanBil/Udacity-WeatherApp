@@ -1,6 +1,7 @@
 /* Global Variables */
 let baseURL = 'https://api.openweathermap.org/data/2.5/weather?q=';
-let apiKey = '&appid=48b6753b8d73fd35d09a779482d2500a';
+const linker = '&appid='
+let apiKey = `${linker}48b6753b8d73fd35d09a779482d2500a`;
 
 
 // Create a new date instance dynamically with JS
@@ -53,7 +54,7 @@ const postDataToServer = async (temp) => {
     try {
         const newData = await response.json();
        // console.log(newData);
-        console.log('Data added successfully!');
+       // console.log('Data added successfully!');
         return newData;
     } catch (error) {
         console.log("error", error);
