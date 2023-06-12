@@ -5,7 +5,7 @@ let apiKey = '&appid=48b6753b8d73fd35d09a779482d2500a';
 
 // Create a new date instance dynamically with JS
 let d = new Date();
-let newDate = d.getMonth() + '.' + d.getDate() + '.' + d.getFullYear();
+let newDate = (d.getMonth() + 1) + '.' + d.getDate() + '.' + d.getFullYear();
 
 // Event listener for the element with the id: generate, with a callback function to execute when it is clicked.
 document.getElementById('generate').addEventListener('click', getWeatherDataFunction);
@@ -22,8 +22,10 @@ const getOpenWeatherData = async (baseURL, zip, key) => {
     try {
         const data = await res.json();
         const temp = data.main.temp;
+        // Converts Kelvin to degree
+        const tempCelsius = temp - 273.15;
         //console.log('temp: ' + temp)
-        postDataToServer(temp).then(updateUI);
+        postDataToServer(tempCelsius).then(updateUI);
     } catch (error) {
         console.log("error", error);
     }
@@ -64,7 +66,7 @@ const updateUI = async () => {
     const request = await fetch('/all');
     try {
         const allData = await request.json();
-        document.getElementById('temp').innerHTML = allData.temperature;
+        document.getElementById('temp').innerHTML = Math.round(allData.temperature)+ ' degrees';
         document.getElementById('date').innerHTML = allData.date;
         document.getElementById('content').innerHTML = allData.content;
     } catch (error) {
